@@ -1,0 +1,37 @@
+CREATE TABLE ref (
+    ref_id INT AUTO_INCREMENT PRIMARY KEY,
+    ref_name VARCHAR(100) NOT NULL,
+    ref_number VARCHAR(20)
+);
+CREATE TABLE customer (
+    c_id INT AUTO_INCREMENT PRIMARY KEY,
+    c_name VARCHAR(100) NOT NULL,
+    c_ownername VARCHAR(100),
+    c_ownernumber VARCHAR(20)
+);
+
+CREATE TABLE ticket (
+    t_id INT AUTO_INCREMENT PRIMARY KEY,
+    ref_id INT NOT NULL,
+    c_id INT NOT NULL,
+    region VARCHAR(50),
+    category VARCHAR(50),
+    quantity INT,
+    date DATE,
+    priority ENUM('Low','Medium','High'),
+    FOREIGN KEY (ref_id) REFERENCES ref(ref_id),
+    FOREIGN KEY (c_id) REFERENCES customer(c_id)
+);
+
+CREATE TABLE status (
+    t_id INT PRIMARY KEY,
+    t_status ENUM('Open','In Progress','Closed'),
+    FOREIGN KEY (t_id) REFERENCES ticket(t_id)
+);
+
+////////////////////////////////////////////////////////////////////////////
+
+//CREATE USER 'root'@'localhost' IDENTIFIED BY 'Qazwsx@1234';
+//GRANT ALL PRIVILEGES ON ticket_system.* TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+
